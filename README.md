@@ -6,7 +6,7 @@ Package to interface with the Center for Medicare and Medicaid's (CMS) National 
 
 To search the NPPES API, simply search via your terminal.
 
-    >>> poetry run python search.py --first_name James --last_name Moore
+    $ poetry run python search.py --first_name James --last_name Moore
 
 Optional arguments include:
 
