@@ -14,6 +14,7 @@ nppes_parser.add_argument('--last_name', help="a healthcare provider's last name
 nppes_parser.add_argument('--organization_name', help="a healthcare organization's name")
 nppes_parser.add_argument('--address_purpose', help='options: location, mailing, primary, secondary')
 nppes_parser.add_argument('--city', help='the city a healthcare provider is located in')
+nppes_parser.add_argument('--state', help='the state a healthcare provider is located in')
 nppes_parser.add_argument('--postal_code', help='the zip code a healthcare provider is located in')
 nppes_parser.add_argument('--limit', help='limit results, default is 10 and max is 200')
 
