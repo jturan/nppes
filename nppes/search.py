@@ -22,7 +22,7 @@ nppes_args = nppes_parser.parse_args()
 nppes_args_dict = vars(nppes_args)
 
 # create search function
-def search_nppes_api(args: dict) -> str:
+def search_nppes_api(args: dict) -> dict:
     '''
     Uses arguments from the NPPES CLI to search the NPPES API
 
