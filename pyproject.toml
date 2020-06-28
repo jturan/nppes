@@ -8,6 +8,8 @@ authors = ["Jason Turan <jason.turan@gmail.com>"]
 python = "^3.8"
 requests = "^2.24.0"
 notebook = "^6.0.3"
+click = "^7.1.2"
+Pygments = "^2.6.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
