@@ -1,7 +1,14 @@
-def download():
-    print("Download specific file.")
+def extract():
+    print("Download file")
+
+
+def transform():
+    print("Transform file")
+
+
+def load():
+    print("Load file")
 
 
 def etl():
-    print("Run full ETL pipeline on file.")
-    
+    print("Run full ETL pipeline on file")
