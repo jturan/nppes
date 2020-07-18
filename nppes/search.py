@@ -51,8 +51,7 @@ def search_nppes_api(number: int, enumeration_type: str, taxonomy_description: s
         'postal_code': postal_code,
         'limit': limit 
     }
-    r = requests.get(nppes_api_url, params=query_params)
-    json_data = r.json()
+    json_data = requests.get(nppes_api_url, params=query_params).json()
     formatted_json_data = format_json_response(json_data)
     click.echo(formatted_json_data)
 
