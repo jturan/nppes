@@ -1,13 +1,35 @@
+from pathlib import Path
 from zipfile import ZipFile
 
 import requests
-
-from .settings import DOWNLOADS_FOLDER
 
 
 BASE_URL = 'https://download.cms.gov/nppes/'
 BASE_FILE_NAME = 'NPPES_Data_Dissemination_'
 
+ETL_HOME_DIR = 'npi_etl' # main project folder
+ETL_DOWNLOADS_DIR = 'npi_etl/downloads' # folder for all file downloads
+ETL_SOURCE_FILES_DIR = 'npi_etl/source_files' # folder for all unzipped files
+
+ETL_DIRS = (
+    ETL_HOME_DIR,
+    ETL_DOWNLOADS_DIR,
+    ETL_SOURCE_FILES_DIR
+)
+
+
+def create_etl_pipeline():
+    for folder in ETL_DIRS:
+        p = Path(folder)
+        if p.exists() == False:
+            p.mkdir(parents=True)
+
+
+def validate_etl_pipeline():
+    for folder in ETL_DIRS:
+        if Path(folder).exists() == False:
+            print(f"ERROR: Required folder '{folder}' does not exist!")
+    
 
 def validate_url(url: str) -> bool:
     '''
@@ -24,7 +46,7 @@ def validate_url(url: str) -> bool:
 
 def download_file(url: str, save_path: str, chunk_size: int = 128) -> None:
     '''
-    Downloads a specific NPI file
+    Download a specific NPI file
 
     :param url: a web url
     :param save_path: location where file is downloaded
@@ -40,11 +62,12 @@ def download_file(url: str, save_path: str, chunk_size: int = 128) -> None:
 
 def unzip_file(file_name: str) -> None:
     '''
-    Unzips a downloaded file
+    Unzip a downloaded file
     :param file_name: name of file to be unzipped
     '''
-    file_path = DOWNLOADS_FOLDER + file_name
-    unzip_folder = file_path.replace('.zip', '')
+    unzip_folder_name = file_name.replace('.zip', '')
+    file_path = Path(ETL_DOWNLOADS_DIR).absolute() / file_name
+    unzip_path = Path(ETL_SOURCE_FILES_DIR).absolute() / unzip_folder_name
     
     with ZipFile(file_path, 'r') as z:
         print("Directory:")
@@ -52,13 +75,13 @@ def unzip_file(file_name: str) -> None:
         print("\n")
 
         print("Unzipping...")
-        z.extractall(unzip_folder)
+        z.extractall(unzip_path)
         print("Done!")
 
 
 def extract(month_year, unzip: bool = False) -> None:
     '''
-    Downloads a file based on month/year and auto-unzips into directory
+    Download a file based on month/year and auto-unzip into directory
 
     :param month_year: the month and year of the specified file (ie, 'June 2020')
     :param unzip: 
@@ -68,7 +91,7 @@ def extract(month_year, unzip: bool = False) -> None:
     
     # construct paths for url and download destination
     url = BASE_URL + file_name
-    save_path = f'{DOWNLOADS_FOLDER}{file_name}'
+    save_path = Path(ETL_DOWNLOADS_DIR).absolute() / file_name
 
     # validate url
     is_valid_url = validate_url(url)
@@ -77,7 +100,7 @@ def extract(month_year, unzip: bool = False) -> None:
     if is_valid_url:
         download_file(url, save_path)
     else:
-        print("Invalid URL")
+        print("ERROR: Invalid URL!")
         return
     
     # unzip file
