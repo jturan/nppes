@@ -8,6 +8,10 @@ To search the NPPES API, simply search via your terminal.
 
     $ poetry run python search.py --first_name James --last_name Moore
 
+To search the NPPES API and put results into a DataFrame:
+
+    df = nppes_df(first_name='James', last_name='Moore')
+
 Optional arguments include:
 
 - number
