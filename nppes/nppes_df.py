@@ -32,6 +32,3 @@ def nppes_df(**kwargs) -> pd.DataFrame:
         nppes_api_url = 'https://npiregistry.cms.hhs.gov/api/?version=2.1'
         json_data = requests.get(nppes_api_url, params=search_params).json()
         return pd.json_normalize(json_data['results'])
-
-
-nppes_df(first_name='julia', last_name='gomez')
