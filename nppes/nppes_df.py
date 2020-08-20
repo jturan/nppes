@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import numpy as np
+from functools import reduce
 
 def nppes_df(**kwargs) -> pd.DataFrame:
     '''
