@@ -36,7 +36,7 @@ def search_nppes_api(number: int, enumeration_type: str, taxonomy_description: s
     :param postal_code: the zip code a healthcare provider is located in
     :param limit: limit results, default is 10 and max is 200
     '''
-    click.echo(click.style('searching the NPPES API...🔦', fg='blue'))
+    click.echo(click.style('Searching the NPPES API...🔦', fg='blue'))
     nppes_api_url = 'https://npiregistry.cms.hhs.gov/api/?version=2.1'
     search_params = {
         'number': number,

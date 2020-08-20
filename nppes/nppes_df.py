@@ -31,4 +31,12 @@ def nppes_df(**kwargs) -> pd.DataFrame:
         print('Searching the NPPES API...🔦')
         nppes_api_url = 'https://npiregistry.cms.hhs.gov/api/?version=2.1'
         json_data = requests.get(nppes_api_url, params=search_params).json()
-        return pd.json_normalize(json_data['results'])
+
+        main_results_df = pd.json_normalize(json_data['results'])[['number', 'basic.name','basic.name_prefix', 'basic.first_name', 'basic.last_name', 'basic.middle_name', 'basic.credential', 'basic.gender']]
+        addresses_df = pd.json_normalize(json_data['results'], 'addresses', 'number')
+        taxonomies_df = pd.json_normalize(json_data['results'], 'taxonomies', 'number')
+        
+        dataframes_to_merge = [main_results_df, addresses_df, practice_locations_df, taxonomies_df]
+        
+        return reduce(lambda left,right: pd.merge(left,right,on=['number'],
+                                            how='outer'), dataframes_to_merge)
