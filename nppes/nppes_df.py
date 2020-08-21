@@ -3,9 +3,9 @@ import pandas as pd
 import numpy as np
 from functools import reduce
 
-def nppes_df(**kwargs) -> pd.DataFrame:
+def get_nppes_data(**kwargs: str) -> dict:
     '''
-    Searches the NPPES API based on various fields and returns a DataFrame with the results
+    Searches the NPPES API based on various fields and returns response in json format
     
     :param number: a healthcare provider's National Provider Identifier
     :param enumeration_type: the type of healthcare provider, 1: people, 2: places
@@ -32,12 +32,41 @@ def nppes_df(**kwargs) -> pd.DataFrame:
         print('Searching the NPPES API...🔦')
         nppes_api_url = 'https://npiregistry.cms.hhs.gov/api/?version=2.1'
         json_data = requests.get(nppes_api_url, params=search_params).json()
+        return json_data
 
-        main_results_df = pd.json_normalize(json_data['results'])[['number', 'basic.name','basic.name_prefix', 'basic.first_name', 'basic.last_name', 'basic.middle_name', 'basic.credential', 'basic.gender']]
-        addresses_df = pd.json_normalize(json_data['results'], 'addresses', 'number')
-        taxonomies_df = pd.json_normalize(json_data['results'], 'taxonomies', 'number')
+def json_data_to_df(json_data: dict) -> pd.DataFrame:
+    '''
+    Converts json data from the NPPES API into a DataFrame
+
+    :param json_data: list of json data, returned by the NPPES API from the `get_nppes_data` function
+    '''
+    main_results_df = pd.json_normalize(json_data['results'])[['number', 'basic.name','basic.name_prefix', 'basic.first_name', 'basic.last_name', 'basic.middle_name', 'basic.credential', 'basic.gender']]
+    addresses_df = pd.json_normalize(json_data['results'], 'addresses', 'number')
+    taxonomies_df = pd.json_normalize(json_data['results'], 'taxonomies', 'number')
+
+    dataframes_to_merge = [main_results_df, addresses_df, taxonomies_df]
+
+    print('Complete.')
+    return reduce(lambda left, right: pd.merge(left, right, on = ['number'],
+                                        how = 'outer'), dataframes_to_merge)
+
         
-        dataframes_to_merge = [main_results_df, addresses_df, practice_locations_df, taxonomies_df]
-        
-        return reduce(lambda left,right: pd.merge(left,right,on=['number'],
-                                            how='outer'), dataframes_to_merge)
+def nppes_df(**kwargs: str) -> pd.DataFrame:
+    '''
+    Searches the NPPES API based on various fields and returns a DataFrame with the results
+    
+    :param number: a healthcare provider's National Provider Identifier
+    :param enumeration_type: the type of healthcare provider, 1: people, 2: places
+    :param taxonomy_description: exact description or exact specialty
+    :param first_name: a healthcare provider's first name
+    :param last_name: a healthcare provider's last name
+    :param organization_name: a healthcare organization's name
+    :param address_purpose: the type of address (location, mailing, primary, or specialty)
+    :param city: the city a healthcare provider is located in
+    :param state: the state a healthcare provider is located in
+    :param postal_code: the zip code a healthcare provider is located in
+    :param limit: limit results, default is 10 and max is 200
+    '''
+    json_data = get_nppes_data(**kwargs)
+    
+    return json_data_to_df(json_data)

@@ -3,7 +3,7 @@ import click
 import json
 from pygments import highlight, lexers, formatters
 
-def format_json_response(json_data):
+def format_json_response_cli(json_data):
     formatted_json = json.dumps(json_data, sort_keys=True, indent=4)
     highlighted_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
     return highlighted_json
@@ -52,7 +52,7 @@ def search_nppes_api(number: int, enumeration_type: str, taxonomy_description: s
         'limit': limit 
     }
     json_data = requests.get(nppes_api_url, params=search_params).json()
-    formatted_json_data = format_json_response(json_data)
+    formatted_json_data = format_json_response_cli(json_data)
     click.echo(formatted_json_data)
 
 if __name__ == '__main__':
