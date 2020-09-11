@@ -2,16 +2,26 @@
 name = "nppes"
 version = "0.1.0"
 description = ""
-authors = ["Jason Turan <jason.turan@gmail.com>"]
+authors = ["Jason Turan <jason.turan@gmail.com>", "Adrienne Franke <adriennefranke@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
 requests = "^2.24.0"
+notebook = "^6.0.3"
+click = "^7.1.2"
+Pygments = "^2.6.1"
+nox = "^2020.5.24"
+pytest-mock = "^3.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 jupyterlab = "^2.1.4"
 pandas = "^1.0.5"
+coverage = {extras = ["toml"], version = "^5.2"}
+pytest-cov = "^2.10.0"
+
+[tool.coverage.paths]
+source = ["src", "*/site-packages"]
 
 [build-system]
 requires = ["poetry>=0.12"]
