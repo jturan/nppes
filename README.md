@@ -2,6 +2,10 @@
 
 Package to interface with the Center for Medicare and Medicaid's (CMS) National Plan and Provider Enumeration System (NPPES).
 
+## To Install
+
+    $ pip install nppes
+
 ## Search
 
 To search the NPPES API, simply search via your terminal.
