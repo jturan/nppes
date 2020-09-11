@@ -8,8 +8,8 @@ BASE_URL = 'https://download.cms.gov/nppes/'
 BASE_FILE_NAME = 'NPPES_Data_Dissemination_'
 
 HOME_DIR = 'nppes_app' # main project folder
-DOWNLOADS_DIR = 'nppes_app/downloads' # folder for all file downloads
-SOURCE_FILES_DIR = 'nppes_app/source_files' # folder for all unzipped files
+DOWNLOADS_DIR = Path(HOME_DIR).absolute() / 'downloads' # folder for all file downloads
+SOURCE_FILES_DIR = Path(HOME_DIR).absolute() / 'source_files' # folder for all unzipped files
 
 APP_DIRS = (
     HOME_DIR,
