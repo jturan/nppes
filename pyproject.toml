@@ -12,6 +12,7 @@ python = "^3.8"
 requests = "^2.24.0"
 click = "^7.1.2"
 Pygments = "^2.6.1"
+pandas = "^1.1.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

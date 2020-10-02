@@ -1,5 +1,4 @@
 __version__ = '0.1.2'
 
 from .files import etl, download
-from .nppes_df import nppes_df
-from .search import search_nppes_api
+from .nppes_df import get_nppes_data, json_data_to_df, nppes_df

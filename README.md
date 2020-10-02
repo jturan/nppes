@@ -10,9 +10,11 @@ Package to interface with the Center for Medicare and Medicaid's (CMS) National 
 
 To search the NPPES API, simply search via your terminal.
 
-    $ poetry run python search.py --first_name James --last_name Moore
+    $ search_nppes_api --first_name James --last_name Moore
 
 To search the NPPES API and put results into a DataFrame:
+
+    from nppes import nppes_df
 
     df = nppes_df(first_name='James', last_name='Moore')
 
