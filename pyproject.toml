@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nppes"
-version = "0.1.2"
+version = "0.1.3"
 description = "Package to interface with the Center for Medicare and Medicaid's (CMS) National Plan and Provider Enumeration System (NPPES)."
 authors = ["Jason Turan <jason.turan@gmail.com>", "Adrienne Franke <adriennefranke@gmail.com>"]
 documentation = "https://github.com/jturan/nppes"
