@@ -55,5 +55,5 @@ def search_nppes_api(number: int, enumeration_type: str, taxonomy_description: s
     formatted_json_data = format_json_response_cli(json_data)
     click.echo(formatted_json_data)
 
-if __name__ == '__main__':
+def main():
     search_nppes_api()
