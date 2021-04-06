@@ -5,7 +5,7 @@ from nppes.search import search_nppes_api
 
 
 def test_version():
-    assert __version__ == '0.1.0'
+    assert __version__ == '0.1.4'
 
 @pytest.fixture
 def runner():
