@@ -43,6 +43,11 @@ def json_data_to_df(json_data: dict) -> pd.DataFrame:
     main_results_df = pd.json_normalize(json_data['results'])[['number', 'basic.name','basic.name_prefix', 'basic.first_name', 'basic.last_name', 'basic.middle_name', 'basic.credential', 'basic.gender']]
     addresses_df = pd.json_normalize(json_data['results'], 'addresses', 'number')
     taxonomies_df = pd.json_normalize(json_data['results'], 'taxonomies', 'number')
+    
+    addresses_df.rename(columns={'state': 'address_state'}, inplace=True)   
+    taxonomies_df.rename(
+        columns={'code':'taxonomy_code', 'desc': 'taxonomy_desc', 'primary': 'taxonomy_primary', 'state': 'taxonomy_state'}, 
+        inplace=True)
 
     dataframes_to_merge = [main_results_df, addresses_df, taxonomies_df]
 
